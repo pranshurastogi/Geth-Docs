@@ -51,3 +51,34 @@ make geth
 ```
 You can now run `build/bin/geth` to start your node.
 
+or, to build the full suite of utilities:
+```
+make all
+```
+## Run Geth
+
+### Full node on the main Ethereum network
+By far the most common scenario is people wanting to simply interact with the Ethereum network: create accounts; transfer funds; deploy and interact with contracts. For this particular use-case the user doesn't care about years-old historical data, so we can fast-sync quickly to the current state of the network. To do so:
+
+```
+$ geth console
+```
+This command will:
+
+Start geth in fast sync mode (default, can be changed with the --syncmode flag), causing it to download more data in exchange for avoiding processing the entire history of the Ethereum network, which is very CPU intensive.
+Start up Geth's built-in interactive JavaScript console, (via the trailing console subcommand) through which you can invoke all official web3 methods as well as Geth's own management APIs. This tool is optional and if you leave it out you can always attach to an already running Geth instance with geth attach.
+
+### A Full node on the Ethereum test network
+Transitioning towards developers, if you'd like to play around with creating Ethereum contracts, you almost certainly would like to do that without any real money involved until you get the hang of the entire system. In other words, instead of attaching to the main network, you want to join the test network with your node, which is fully equivalent to the main network, but with play-Ether only.
+```
+$ geth --testnet console
+```
+Specifying the `--testnet` flag, however, will reconfigure your Geth instance a bit:
+
+Instead of using the default data directory `(~/.ethereum on Linux for example)`, Geth will nest itself one level deeper into a testnet subfolder `(~/.ethereum/testnet on Linux)`. Note, on OSX and Linux this also means that attaching to a running testnet node requires the use of a custom endpoint since geth attach will try to attach to a production node endpoint by default. E.g. `geth attach <datadir>/testnet/geth.ipc.` Windows users are not affected by this.
+Instead of connecting the main Ethereum network, the client will connect to the test network, which uses different P2P bootnodes, different network IDs and genesis states.
+Note: Although there are some internal protective measures to prevent transactions from crossing over between the main network and test network, you should make sure to always use separate accounts for play-money and real-money. Unless you manually move accounts, Geth will by default correctly separate the two networks and will not make any accounts available between them.
+
+### Standard API's and Geth specific API's
+https://github.com/ethereum/go-ethereum/wiki/Management-APIs
+https://github.com/ethereum/wiki/wiki/JSON-RPC
