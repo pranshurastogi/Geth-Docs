@@ -1,4 +1,4 @@
-# Geth-Parity-Docs
+# Geth-Docs
 
 ## What is Geth?
 
