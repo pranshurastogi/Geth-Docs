@@ -84,3 +84,37 @@ https://github.com/ethereum/go-ethereum/wiki/Management-APIs
 
 
 https://github.com/ethereum/wiki/wiki/JSON-RPC
+
+
+### Compiling Smart Contract
+Before you are able to Deploy it though, you'll need two things: the compiled code, and the Application Binary Interface, which is a sort of reference template that defines how to interact with the contract.
+
+The first you can get by using a compiler. You should have a solidity compiler built in on your geth console. To test it, use this command:
+
+```eth.getCompilers()```
+If you have it installed, it should output something like this:
+
+```['Solidity' ]```
+If instead the command returns an error, then you need to install it.
+
+
+#### Install SolC on Ubuntu
+Press control+c to exit the console (or type exit) and go back to the command line. Open the terminal and execute these commands:
+```
+sudo add-apt-repository ppa:ethereum/ethereum
+sudo apt-get update
+sudo apt-get install solc
+which solc
+```
+Take note of the path given by the last line, you'll need it soon.
+
+### Linking your compiler in Geth
+Now go back to the console and type this command to install solC, replacing path/to/solc to the path that you got on the last command you did:
+```
+admin.setSolc("path/to/solc")
+```
+Now type again:
+
+`eth.getCompilers()
+`
+
